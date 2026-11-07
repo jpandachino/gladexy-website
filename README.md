@@ -1,13 +1,11 @@
 # Gladexy website
 
-Ordering website for Gladexy (Lagos). Orders are sent to WhatsApp, so no accounts or database are needed.
+Ordering website for Gladexy (Lagos). Orders go to WhatsApp and are also saved in Firebase.
 
-## Going live checklist
+## WhatsApp numbers
 In `index.html`, search for `WHATSAPP_NUMBER`:
-- Testing: `2348115774461`
-- Live: change to `2348034545059`
-
-Also change `const TESTING = true;` to `false`.
+- `WHATSAPP_NUMBER` = main line (2348034545059). Every order goes here first.
+- `BACKUP_NUMBER` = second line (2348115774461). Offered to customers if the main line doesn't reply.
 
 ## Firebase (database + Google Analytics)
 Project: gladexy-45bb7. The settings are in the `firebaseConfig` block near the end of `index.html`.
