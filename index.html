@@ -37,7 +37,7 @@
 html{scroll-behavior:smooth;overflow-x:clip}
 body{overflow-x:clip}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.5;padding-bottom:96px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.5;padding-bottom:calc(96px + var(--badge-space,0px))}
 h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
 p{margin:0}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -163,7 +163,7 @@ footer .wrap{display:grid;gap:10px}
 .flinks{display:flex;gap:16px;flex-wrap:wrap}
 
 /* floating order bar */
-.cartbar{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:35;margin:0 auto;width:min(480px,calc(100% - 32px));display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--green);color:var(--on-green);border:0;border-radius:999px;padding:14px 22px;font-weight:700;box-shadow:var(--shadow);cursor:pointer}
+.cartbar{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px) + var(--badge-space,0px));transition:bottom .3s ease;z-index:35;margin:0 auto;width:min(480px,calc(100% - 32px));display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--green);color:var(--on-green);border:0;border-radius:999px;padding:14px 22px;font-weight:700;box-shadow:var(--shadow);cursor:pointer}
 .cartbar .amt{font-variant-numeric:tabular-nums}
 
 /* ===== 3D motion (pure CSS + a few lines of JS, no libraries) ===== */
@@ -345,7 +345,7 @@ body.no-splash .hero h1 .w{animation-delay:calc(var(--d) * 90ms)}
 .wfoot{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .skip{background:none;border:0;color:var(--muted);cursor:pointer;font-weight:600;padding:8px 4px}
 
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-weight:600;font-size:.9rem;z-index:80;box-shadow:var(--shadow);white-space:nowrap}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px) + var(--badge-space,0px));background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-weight:600;font-size:.9rem;z-index:80;box-shadow:var(--shadow);white-space:nowrap}
 
 /* ===== Fits every screen: phones, foldables, tablets, laptops, big monitors ===== */
 html{font-size:clamp(15px, 13.4px + .3vw, 18px)}
@@ -381,7 +381,7 @@ html{font-size:clamp(15px, 13.4px + .3vw, 18px)}
   .welcome img{height:40px}
   .sheet,.sheet.tall{max-height:96vh;max-height:96dvh;height:auto}
   .splash img{width:80px}
-  body{padding-bottom:84px}
+  body{padding-bottom:calc(84px + var(--badge-space,0px))}
 }
 @media (min-width:700px) and (max-height:520px){.sheet{top:50%;transform:translateY(-50%)}}
 @media (max-height:520px) and (orientation:landscape) and (min-width:560px) and (max-width:700px){
@@ -1100,6 +1100,24 @@ if("IntersectionObserver" in window){ const io=new IntersectionObserver(es=>es.f
   if(reduce) return;
   raf=requestAnimationFrame(loop);
   document.addEventListener("visibilitychange",()=>{ cancelAnimationFrame(raf); last=0; if(!document.hidden) raf=requestAnimationFrame(loop); });
+})();
+// ===== Keep our order bar clear of anything the host adds in the bottom corner (e.g. the "Powered by Netlify" badge) =====
+(function(){
+  const ours=el=>!el || el===document.body || el===document.documentElement || el.id==="bgLeaves" || el.closest("main,footer,header,.cartbar,.toast,#drawer,#sheet,#welcome,#scrim,.splash,.fly,.confetti");
+  let pending=0;
+  function check(){ pending=0; let space=0;
+    const found=new Set();
+    document.querySelectorAll("iframe,[id*='netlify' i],[class*='netlify' i]").forEach(e=>{ if(!ours(e)) found.add(e); });
+    for(const [x,y] of [[innerWidth-12,innerHeight-12],[innerWidth-40,innerHeight-30],[innerWidth-90,innerHeight-20]]){ const e=document.elementFromPoint(x,y); if(e && !ours(e)) found.add(e); }
+    found.forEach(e=>{ const r=e.getBoundingClientRect(), st=getComputedStyle(e);
+      if(r.width && r.height && st.visibility!=="hidden" && st.display!=="none" && r.bottom>innerHeight-140 && r.right>innerWidth*0.45 && r.height<160)
+        space=Math.max(space, Math.round(innerHeight-r.top+6)); });
+    document.documentElement.style.setProperty("--badge-space", Math.min(space,150)+"px");
+  }
+  const later=()=>{ if(!pending) pending=requestAnimationFrame(check); };
+  addEventListener("load",later); addEventListener("resize",later);
+  new MutationObserver(ms=>{ if(ms.some(m=>[...m.addedNodes,...m.removedNodes].some(n=>n.nodeType===1 && !ours(n)))) later(); }).observe(document.documentElement,{childList:true,subtree:true});
+  let n=0; const t=setInterval(()=>{ later(); if(++n>20) clearInterval(t); },1500);
 })();
 const startWelcome=()=>{ if(store.get("gx-seen","")!=="1") openWelcome(0); };
 if($("splash")) setTimeout(startWelcome,1500); else startWelcome();
