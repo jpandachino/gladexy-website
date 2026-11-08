@@ -55,9 +55,12 @@ header.top .wrap{display:flex;align-items:center;gap:10px;height:60px}
 .dnav a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:999px}
 .dnav a:hover{color:var(--ink);background:var(--surface)}
 @media (max-width:700px){.dnav{display:none}}
-.hello{border:0;background:color-mix(in srgb,var(--green) 16%,transparent);color:var(--green);font-weight:700;font-size:.92rem;border-radius:999px;padding:7px 13px;cursor:pointer;white-space:nowrap;max-width:44vw;overflow:hidden;text-overflow:ellipsis;animation:helloIn .6s cubic-bezier(.2,1.4,.4,1)}
+.hello{border:0;background:color-mix(in srgb,var(--green) 16%,transparent);color:var(--green);font-weight:700;font-size:.92rem;border-radius:999px;padding:7px 13px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;animation:helloIn .6s cubic-bezier(.2,1.4,.4,1)}
 @keyframes helloIn{from{transform:perspective(400px) rotateX(-90deg)}to{transform:none}}
-@media (max-width:440px){body.has-name .brand span{display:none}}
+.brand{flex:none}
+.hello{flex:0 1 auto;min-width:0}
+@media (max-width:400px){.brand span{font-size:1.5rem}.brand img{height:30px}.hello{font-size:.82rem;padding:6px 10px}header.top .wrap{gap:8px}}
+@media (max-width:340px){.hello{max-width:84px}}
 .icon-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--ink);position:relative}
 .icon-btn svg{width:19px;height:19px}
 .icon-btn .count{position:absolute;top:-4px;right:-4px;background:var(--orange);color:#2B1604;border-radius:999px;min-width:19px;height:19px;font-size:.7rem;font-weight:700;display:grid;place-items:center;padding:0 5px}
@@ -101,6 +104,7 @@ header.top .wrap{display:flex;align-items:center;gap:10px;height:60px}
 .catnote{color:var(--muted);font-size:.86rem;padding-block:2px 12px}
 
 /* product cards */
+#list{touch-action:pan-y;will-change:transform}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (min-width:640px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
 @media (min-width:960px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
@@ -199,6 +203,16 @@ footer .wrap{display:grid;gap:10px}
 .ring.ok{background:var(--green);color:var(--on-green)}
 @keyframes ringIn{from{transform:perspective(500px) rotateY(180deg) scale(.4)}to{transform:none}}
 .help{display:grid;gap:10px}
+.obody{grid-template-columns:minmax(0,1fr)}
+.news{min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:8px;justify-items:center;text-align:center;background:linear-gradient(160deg,color-mix(in srgb,var(--green) 20%,var(--surface)),color-mix(in srgb,var(--orange) 16%,var(--surface)));border-radius:20px;padding:20px 16px;animation:newsIn .6s .5s cubic-bezier(.2,1.3,.4,1) both}
+@keyframes newsIn{from{transform:perspective(600px) rotateX(-40deg) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.news strong{font-family:var(--display);font-size:1.15rem}
+.news p{color:var(--muted);font-size:.9rem;max-width:26em}
+.news-ic{width:46px;height:46px;border-radius:50%;background:var(--surface);color:var(--orange);display:grid;place-items:center;animation:wiggle 2.4s 1.2s ease-in-out infinite}
+.news-ic svg{width:22px;height:22px}
+@keyframes wiggle{0%,80%,100%{transform:none}85%{transform:rotate(-12deg)}90%{transform:rotate(10deg)}95%{transform:rotate(-6deg)}}
+.news-row{display:flex;gap:8px;width:100%}
+.news-row input{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:11px 14px;font-size:16px}
 .backup{border:1px dashed var(--line);border-radius:16px;padding:14px;display:grid;gap:10px}
 .backup p{color:var(--muted);font-size:.92rem}.backup b{color:var(--ink)}
 .steps3{display:flex;gap:6px}
@@ -301,6 +315,9 @@ body.no-splash .hero h1 .w{animation-delay:calc(var(--d) * 90ms)}
 @media (min-width:700px){@keyframes sheetIn{from{transform:translateY(-46%) perspective(900px) rotateX(18deg)}to{transform:translateY(-50%)}}}
 @keyframes popIn{from{transform:translate(-50%,-50%) perspective(700px) rotateX(-30deg) scale(.85)}to{transform:translate(-50%,-50%)}}
 /* welcome + tutorial */
+.acct{display:flex;gap:14px;align-items:center;background:var(--raise);border-radius:16px;padding:14px}
+.acct strong{display:block;font-size:1.05rem}.acct span{color:var(--muted);font-size:.9rem}
+.avatar.sm{flex:none;width:48px;height:48px;border-radius:50%;background:var(--green);color:var(--on-green);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:1.2rem}
 .welcome{animation:popIn .5s cubic-bezier(.2,1.3,.4,1);position:fixed;z-index:70;left:50%;top:50%;transform:translate(-50%,-50%);width:min(380px,calc(100% - 32px));background:var(--surface);border-radius:24px;padding:28px 24px 22px;box-shadow:var(--shadow);text-align:center;display:grid;gap:14px}
 .welcome img{height:56px;margin:0 auto}
 .welcome h3{font-size:1.45rem;font-weight:800}
@@ -386,7 +403,7 @@ body.no-splash .hero h1 .w{animation-delay:calc(var(--d) * 90ms)}
     <div class="copyline">Second line <b id="waShow2"></b><button class="mini" id="copyWa2">Copy</button></div>
     <p>Lagos · Pickup · Lagos delivery · Shipping across Nigeria for selected items</p>
     <p>© Gladexy. You are what you eat.</p>
-    <div class="flinks"><a href="#events" style="color:inherit">Events</a><a href="#about" style="color:inherit">About</a><button class="textlink" id="howBtn2" style="color:inherit">How to order</button><a href="#menu" style="color:inherit">Menu</a></div>
+    <div class="flinks"><a href="#events" style="color:inherit">Events</a><a href="#about" style="color:inherit">About</a><button class="textlink" id="howBtn2" style="color:inherit">How to order</button><a href="#menu" style="color:inherit">Menu</a><button class="textlink" id="footOut" style="color:inherit" hidden>Sign out</button></div>
   </div>
 </footer>
 
@@ -413,7 +430,8 @@ window.gxQueue = window.gxQueue || [];
 function fire(fn, ...args){ try { if(window.gxFire) window.gxFire[fn](...args); else window.gxQueue.push([fn,args]); } catch(e){} }
 const store = {
   get(k, d){ try { const v = localStorage.getItem(k); return v === null ? d : v; } catch(e){ return d; } },
-  set(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
+  set(k, v){ try { localStorage.setItem(k, v); } catch(e){} },
+  del(...ks){ ks.forEach(k=>{ try { localStorage.removeItem(k); } catch(e){} }); }
 };
 const $ = id => document.getElementById(id);
 let uid = 0;
@@ -529,12 +547,31 @@ function renderTabs(){
 }
 addEventListener("resize",()=>renderTabs());
 try{ document.fonts.ready.then(()=>renderTabs()); }catch(e){}
-function goTab(id){ if(id===tab) return; tab=id; listAnimate=true; renderTabs(); renderList(); }
-// swipe between categories on phones
-(function(){ let x0=0,y0=0; const L=$("list");
-  L.addEventListener("touchstart",e=>{ x0=e.touches[0].clientX; y0=e.touches[0].clientY; },{passive:true});
-  L.addEventListener("touchend",e=>{ if(e.target.closest("select,input")) return; const dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0;
-    if(Math.abs(dx)>70 && Math.abs(dy)<50){ const i=CATS.findIndex(c=>c.id===tab), n=CATS[(i+(dx<0?1:-1)+CATS.length)%CATS.length]; goTab(n.id); buzz(8); } },{passive:true});
+function goTab(id, anim=true){ if(id===tab) return; tab=id; listAnimate=anim; renderTabs(); renderList(); }
+// swipe between categories on phones: the menu follows your finger, then glides to the next category
+(function(){
+  const L=$("list"); let x0=0,y0=0,t0=0,dx=0,axis=null,busy=false;
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const set=(x,o,tr)=>{ L.style.transition=tr||"none"; L.style.transform=x?`translate3d(${x}px,0,0)`:""; L.style.opacity=o==null?"":o; };
+  L.addEventListener("touchstart",e=>{ if(busy || e.touches.length>1 || e.target.closest("select,input,textarea")){ axis="none"; return; }
+    x0=e.touches[0].clientX; y0=e.touches[0].clientY; t0=performance.now(); dx=0; axis=null; },{passive:true});
+  L.addEventListener("touchmove",e=>{ if(axis==="none"||axis==="y") return;
+    const mx=e.touches[0].clientX-x0, my=e.touches[0].clientY-y0;
+    if(!axis){ if(Math.abs(mx)<8 && Math.abs(my)<8) return; axis = Math.abs(mx)>Math.abs(my)*1.2 ? "x" : "y"; if(axis==="y") return; }
+    dx=mx; const w=L.clientWidth; set(dx, 1-Math.min(.5,Math.abs(dx)/w*.6));
+  },{passive:true});
+  const end=()=>{ if(axis!=="x"){ axis=null; return; } axis=null;
+    const w=L.clientWidth, v=dx/Math.max(1,performance.now()-t0);
+    if(Math.abs(dx)>w*.22 || Math.abs(v)>.45){
+      const dir=dx<0?1:-1, i=CATS.findIndex(c=>c.id===tab), next=CATS[(i+dir+CATS.length)%CATS.length];
+      busy=true; buzz(8);
+      set(-dir*w, 0, reduce?"none":"transform .18s cubic-bezier(.4,0,1,1), opacity .18s");
+      setTimeout(()=>{ goTab(next.id,false); set(dir*w*.35, 0);
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{ set(0, 1, reduce?"none":"transform .34s cubic-bezier(.2,.9,.3,1), opacity .25s"); setTimeout(()=>{ set(0); busy=false; },360); }));
+      }, reduce?0:180);
+    } else set(0, 1, "transform .3s cubic-bezier(.2,1.2,.4,1), opacity .2s");
+    dx=0; };
+  L.addEventListener("touchend",end,{passive:true}); L.addEventListener("touchcancel",end,{passive:true});
 })();
 function renderList(){
   $("catNote").textContent = CATS.find(c=>c.id===tab).note;
@@ -640,6 +677,8 @@ $("sheet").addEventListener("click",e=>{
   if(e.target.id==="addBlend" && blend.picks.size){ flyFrom(e.target); const list=[...blend.picks].join(", "); const sz=blend.size?"50cl":"35cl";
     addItem({key:"sm-"+sz+"-"+list, cat:"smoothie", name:"Custom Smoothie", option:sz, price:null, note:list}); closeLayers(); }
   if(e.target.id==="evSubmit") sendEvent();
+  if(e.target.id==="acctOut") return signOut();
+  if(e.target.id==="acctEdit"){ closeLayers(); welcomeShort=true; return openWelcome(0); }
   if(e.target.closest("#sendEvent") && pendingEvent){ fire("saveOrder",pendingEvent); fire("saveCustomer",pendingEvent.name,pendingEvent.phone); fire("track","event_request",{}); pendingEvent=null;
     setTimeout(()=>{ const sh=$("sheet"); if(sh.hidden) return;
       confetti(); sh.querySelector(".obody").innerHTML=`<div class="confirm done"><div class="ring ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h4>Request sent?</h4><p>Glory will call you to plan your event. No reply soon? Send it to our second line too.</p></div>`;
@@ -732,6 +771,7 @@ function renderDrawer(){
     body = `<div class="confirm done"><div class="ring ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
       <h4>Thank you${userName?", "+esc(userName):""}! 🎉</h4>
       <p>Your order is with Glory. She'll reply on WhatsApp to confirm it and the delivery fee.</p></div>
+      ${newsHTML()}
       <div class="backup"><p><b>No reply in 30 minutes?</b> Send the same order to our second line.</p>
         <a class="btn btn-ghost btn-block" id="sendBackup" href="${waLink(lastMsg, BACKUP_NUMBER)}" target="_blank" rel="noopener">${WA_ICON} Send to second line</a></div>`;
     foot = `<button class="btn btn-primary btn-block" data-close>Back to menu</button>`;
@@ -759,6 +799,22 @@ function confetti(){
     const ang=Math.random()*Math.PI*2, dist=90+Math.random()*170, dx=Math.cos(ang)*dist, dy=Math.sin(ang)*dist-60;
     d.animate([{transform:"translate(0,0) rotate3d(1,1,0,0deg) scale(1)",opacity:1},{transform:`translate(${dx}px,${dy}px) rotate3d(1,1,0,360deg) scale(1)`,opacity:1,offset:.55},{transform:`translate(${dx*1.1}px,${dy+260}px) rotate3d(1,.5,0,720deg) scale(.6)`,opacity:0}],
       {duration:1500+Math.random()*700,easing:"cubic-bezier(.2,.7,.3,1)"}).onfinish=()=>d.remove(); }
+}
+function newsHTML(){
+  const st=store.get("gx-news","");
+  if(st==="joined") return "";
+  if(st.startsWith("no:") && Date.now()-(+st.slice(3))<30*864e5) return "";
+  return `<div class="news" id="newsBox"><div class="news-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+    <strong>Join our free newsletter</strong><p>Healthy living tips, new menu items and special offers from Glory. No spam.</p>
+    <div class="news-row"><input id="newsEmail" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" aria-label="Email address"><button class="btn btn-primary" id="newsJoin">Join</button></div>
+    <p class="error" id="newsErr" hidden></p><button class="skip" id="newsNo">No thanks</button></div>`;
+}
+function joinNews(){
+  const em=($("newsEmail").value||"").trim().toLowerCase();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ $("newsErr").textContent="Please enter a valid email, e.g. ada@gmail.com"; $("newsErr").hidden=false; return; }
+  fire("saveSubscriber",{email:em, name:userName||form.name||"", phone:userPhone||form.phone||""}); fire("track","newsletter_signup",{});
+  store.set("gx-news","joined"); buzz(15);
+  $("newsBox").innerHTML=`<div class="ring ok" style="width:56px;height:56px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><strong>You're in! 💚</strong><p>Look out for healthy tips in your inbox.</p>`;
 }
 function finishOrder(){
   awaitingConfirm=false; cart=[]; saveCart(); lastSavedOrder=""; form.date=""; form.notes="";
@@ -793,8 +849,11 @@ $("drawer").addEventListener("click",e=>{
   if(e.target.id==="showHelp"){ $("helpBox").hidden=false; e.target.closest(".row2").querySelector("#showHelp").disabled=true; }
   if(e.target.id==="notYet"){ awaitingConfirm=false; updateCart(); step="send"; renderDrawer(); }
   if(e.target.id==="confirmSent"){ finishOrder(); }
+  if(e.target.id==="newsJoin") joinNews();
+  if(e.target.id==="newsNo"){ store.set("gx-news","no:"+Date.now()); const b=$("newsBox"); b.style.transition="transform .3s, opacity .3s"; b.style.transform="scale(.9)"; b.style.opacity="0"; setTimeout(()=>b.remove(),300); }
   if(e.target.closest("#sendBackup")) fire("track","backup_line_used",{});
 });
+$("drawer").addEventListener("keydown",e=>{ if(e.key==="Enter" && e.target.id==="newsEmail"){ e.preventDefault(); joinNews(); } });
 $("drawer").addEventListener("change",e=>{ if(e.target.id==="dMethod"){ readDetails(); renderDrawer(); } });
 function openCart(){ step=awaitingConfirm?"sent":"cart"; renderDrawer(); openLayer("drawer"); }
 $("openCart").addEventListener("click",openCart);
@@ -811,7 +870,7 @@ const TUT = [
   {t:"Check your order", d:"Tap the green order bar at the bottom, then add your name, phone and date.", i:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>`},
   {t:"Send on WhatsApp", d:"Tap Send on WhatsApp. Your order opens ready to go, so just press send.", i:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>`}
 ];
-let wStep=0; // 0 name, 1 phone, 2+ tutorial
+let wStep=0, welcomeShort=false; // 0 name, 1 phone, 2+ tutorial
 const TUT_START=2, LAST=TUT_START+TUT.length-1;
 let userPhone = store.get("gx-phone","");
 if(userPhone) form.phone=userPhone;
@@ -841,7 +900,7 @@ function closeWelcome(){ if(userName||userPhone) fire("saveCustomer",userName,us
 function advance(skip){
   if(wStep===0 && !skip) saveName();
   if(wStep===1 && !skip && !savePhone()) return;
-  if(wStep===LAST || (skip && wStep>=TUT_START)) return closeWelcome();
+  if(wStep===LAST || (skip && wStep>=TUT_START) || (welcomeShort && wStep===1)){ welcomeShort=false; if(wStep===1) toast(userName?`Saved. Hi ${userName}!`:"Saved"); return closeWelcome(); }
   wStep++; renderWelcome();
 }
 $("welcome").addEventListener("click",e=>{
@@ -860,9 +919,26 @@ function paintGreeting(){
   const h=new Date().getHours(), part = h<12?"Good morning":h<17?"Good afternoon":"Good evening";
   $("greeting").textContent = userName ? `${part}, ${userName}` : "Welcome";
   const chip=$("hello"); chip.hidden=!userName; if(userName) chip.textContent=`Hi ${userName} 👋`;
-  document.body.classList.toggle("has-name", !!userName);
+  document.body.classList.toggle("has-name", !!userName); const fo=$("footOut"); if(fo) fo.hidden=!userName;
 }
-$("hello").addEventListener("click",()=>openWelcome(0));
+$("hello").addEventListener("click",openAccount);
+$("footOut").addEventListener("click",signOut);
+function openAccount(){
+  $("sheet").setAttribute("aria-label","Your details");
+  $("sheet").innerHTML=`<div class="ohead"><h3>Hi ${esc(userName)} 👋</h3><button class="x" data-close aria-label="Close">×</button></div>
+    <div class="obody"><div class="acct"><div class="avatar sm">${esc((userName||"?").slice(0,1).toUpperCase())}</div>
+      <div><strong>${esc(userName)}</strong><span>${esc(userPhone||"No phone saved")}</span></div></div>
+      <p class="hint">We remember your details on this phone so ordering is faster next time.</p></div>
+    <div class="ofoot"><button class="btn btn-primary btn-block" id="acctEdit">Change my details</button>
+      <button class="btn btn-ghost btn-block" id="acctOut">Not ${esc(userName)}? Sign out</button></div>`;
+  openLayer("sheet");
+}
+function signOut(){
+  store.del("gx-name","gx-phone","gx-addr","gx-method","gx-saved-customer","gx-cart","gx-news");
+  userName=""; userPhone=""; cart=[]; Object.assign(form,{name:"",phone:"",method:"Pickup",address:"",date:"",notes:""});
+  awaitingConfirm=false; paintGreeting(); renderList(); updateCart(); closeLayers(); toast("Signed out");
+  setTimeout(()=>{ welcomeShort=true; openWelcome(0); },350);
+}
 $("howBtn").addEventListener("click",()=>openWelcome(TUT_START));
 $("howBtn2").addEventListener("click",()=>openWelcome(TUT_START));
 
@@ -951,6 +1027,7 @@ const V = "10.12.2";
         try { localStorage.setItem("gx-saved-customer", keyOf(name, phone)); } catch (e) {}
       },
       async saveOrder(data) { await addDoc(collection(db, "orders"), { ...data, createdAt: serverTimestamp() }); },
+      async saveSubscriber(d) { await addDoc(collection(db, "newsletter"), { email: d.email, name: d.name || "", phone: d.phone || "", createdAt: serverTimestamp() }); },
       track(name, params) { if (analytics && logEvent) logEvent(analytics, name, params || {}); }
     };
     const q = window.gxQueue || []; window.gxQueue = [];
